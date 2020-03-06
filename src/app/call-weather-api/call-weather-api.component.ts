@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-import { ConvertWeatherFunctionsComponent } from './convert-weather-functions/convert-weather-functions.component'
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-call-weather-api',
@@ -12,44 +10,45 @@ export class CallWeatherApiComponent implements OnInit {
   private readonly apiKey: string = "207c35e3e049c4cc7ed85efaf5ffc7c6";
   private readonly url: string = "http://api.openweathermap.org/data/2.5/weather?q="
 
+  private data: object;
+
   constructor() { }
 
   ngOnInit() {
   }
 
-  getWeather() {
+  async getWeather() {
+    // this.processedData = this.processData(this.getWeatherData());
+    console.log(await this.getWeatherData());
+  }
+
+
+  async getWeatherData() {
     const locationTextHTMLInput: HTMLInputElement = document.getElementById("location-text") as HTMLInputElement;
     const locationText = locationTextHTMLInput.value;
     const url: string = this.url + locationText + "&APPID=" + this.apiKey;
 
-    // in Kelvin
-    let cityTemp: number = 0;
-
-    fetch(url, {
-      mode: 'cors'
-    })
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(response) {
-        const cwfc = new ConvertWeatherFunctionsComponent
-
-        console.log(response);
-
-        cityTemp = response.main.temp;
-        
-        console.log(cityTemp + " degrees Kelvin");
-        console.log(cwfc.convertKelvinToCelsius(cityTemp) + " degrees Celsius");
-        console.log(cwfc.convertKelvinToFahrenheit(cityTemp) + " degrees Fahrenheit");
-      })
-      .catch(function(response) {
-        throw response.error;
-      })
+    try {
+      const response = await fetch(url, {mode: 'cors'});
+      return await response.json();
+    } catch (err) {
+      console.log(err);
+    }
   }
-  
-  
 
-  
-  
+  processData(incomingData: object) {
+    let data: object = {};
+    return null;
+    // const cwfc = new ConvertWeatherFunctionsComponent;
+    // console.log(cityTemp + " degrees Kelvin");
+    // console.log(cwfc.convertKelvinToCelsius(cityTemp) + " degrees Celsius");
+    // console.log(cwfc.convertKelvinToFahrenheit(cityTemp) + " degrees Fahrenheit");
+  }
+
+
+
+
+
+
 
 }
