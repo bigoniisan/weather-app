@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ConvertWeatherFunctionsComponent } from './convert-weather-functions/convert-weather-functions.component'
+
 @Component({
   selector: 'app-call-weather-api',
   templateUrl: './call-weather-api.component.html',
@@ -20,6 +22,9 @@ export class CallWeatherApiComponent implements OnInit {
     const locationText = locationTextHTMLInput.value;
     const url: string = this.url + locationText + "&APPID=" + this.apiKey;
 
+    // in Kelvin
+    let cityTemp: number = 0;
+
     fetch(url, {
       mode: 'cors'
     })
@@ -27,11 +32,24 @@ export class CallWeatherApiComponent implements OnInit {
         return response.json();
       })
       .then(function(response) {
+        const cwfc = new ConvertWeatherFunctionsComponent
+
         console.log(response);
+
+        cityTemp = response.main.temp;
+        
+        console.log(cityTemp + " degrees Kelvin");
+        console.log(cwfc.convertKelvinToCelsius(cityTemp) + " degrees Celsius");
+        console.log(cwfc.convertKelvinToFahrenheit(cityTemp) + " degrees Fahrenheit");
       })
       .catch(function(response) {
-        console.log("No city of that name found.");
+        throw response.error;
       })
   }
+  
+  
+
+  
+  
 
 }
