@@ -1,16 +1,19 @@
 import {Component, OnInit} from '@angular/core';
+import { IWeatherData } from './i-weather-data.service';
+import { ConvertWeatherFunctionsComponent } from './convert-weather-functions/convert-weather-functions.component';
 
 @Component({
   selector: 'app-call-weather-api',
   templateUrl: './call-weather-api.component.html',
   styleUrls: ['./call-weather-api.component.css']
 })
+
 export class CallWeatherApiComponent implements OnInit {
 
   private readonly apiKey: string = "207c35e3e049c4cc7ed85efaf5ffc7c6";
   private readonly url: string = "http://api.openweathermap.org/data/2.5/weather?q="
 
-  private data: object;
+  private data: IWeatherData;
 
   constructor() { }
 
@@ -18,10 +21,9 @@ export class CallWeatherApiComponent implements OnInit {
   }
 
   async getWeather() {
-    // this.processedData = this.processData(this.getWeatherData());
-    console.log(await this.getWeatherData());
+    this.data = this.processData(await this.getWeatherData());
+    console.log(this.data);
   }
-
 
   async getWeatherData() {
     const locationTextHTMLInput: HTMLInputElement = document.getElementById("location-text") as HTMLInputElement;
@@ -36,19 +38,16 @@ export class CallWeatherApiComponent implements OnInit {
     }
   }
 
-  processData(incomingData: object) {
-    let data: object = {};
-    return null;
-    // const cwfc = new ConvertWeatherFunctionsComponent;
-    // console.log(cityTemp + " degrees Kelvin");
-    // console.log(cwfc.convertKelvinToCelsius(cityTemp) + " degrees Celsius");
-    // console.log(cwfc.convertKelvinToFahrenheit(cityTemp) + " degrees Fahrenheit");
+  processData(incomingData) {
+    const cwfc = new ConvertWeatherFunctionsComponent;
+    const temp = incomingData.main.temp;
+    let data: IWeatherData = {
+      tempKelvin: temp,
+      tempCelsius: cwfc.convertKelvinToCelsius(temp),
+      tempFahrenheit: cwfc.convertKelvinToFahrenheit(temp),
+      name: incomingData.name,
+      rain: incomingData.rain
+    };
+    return data;
   }
-
-
-
-
-
-
-
 }
