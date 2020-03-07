@@ -1,7 +1,21 @@
 <div id="container">
 
-  <input id="location-text" name="location-text" type="text">
-
+  <input id="location" name="location" type="text">
   <button (click)="getWeather()">Get weather for city</button>
 
+  <!-- <h3 [class.temp-reading]="showTemp">{{ tempKelvin }} degrees Kelvin</h3>
+  <h3 [class.temp-reading]="showTemp">{{ tempCelsius }} degrees Celsius</h3>
+  <h3 [class.temp-reading]="showTemp">{{ tempFahrenheit }} degrees Fahrenheit</h3> -->
+
+  <h3 class="temp-reading">{{ tempKelvin }} degrees Kelvin</h3>
+  <h3 class="temp-reading">{{ tempCelsius }} degrees Celsius</h3>
+  <h3 class="temp-reading">{{ tempFahrenheit }} degrees Fahrenheit</h3>
+
+  <!-- <form name="search-form">
+    <br>
+    <label for="location-text">City: </label>
+    <br>
+    <input id="location-text" name="location-text" type="text">
+    <input id="search-form-input" type="submit" value="Get Weather For City">
+</form> -->
 </div>

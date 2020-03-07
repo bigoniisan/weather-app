@@ -15,20 +15,38 @@ export class CallWeatherApiComponent implements OnInit {
 
   private data: IWeatherData;
 
+  private tempKelvin: number;
+  private tempCelsius: number;
+  private tempFahrenheit: number;
+
+  public showTemp: boolean;
+
   constructor() { }
 
   ngOnInit() {
+    this.tempKelvin = 0;
+    this.tempCelsius = 0;
+    this.tempFahrenheit = 0;
+    this.showTemp = false;
   }
 
   async getWeather() {
     this.data = this.processData(await this.getWeatherData());
+    this.tempKelvin = this.data.tempKelvin;
+    this.tempCelsius = this.data.tempCelsius;
+    this.tempFahrenheit = this.data.tempFahrenheit;
+    this.showTemp = true;
     console.log(this.data);
   }
 
   async getWeatherData() {
-    const locationTextHTMLInput: HTMLInputElement = document.getElementById("location-text") as HTMLInputElement;
+    const locationTextHTMLInput: HTMLInputElement = document.getElementById("location") as HTMLInputElement;
     const locationText = locationTextHTMLInput.value;
+
+    // const locationInput = document.forms["search-form"]["location-text"].value;
+
     const url: string = this.url + locationText + "&APPID=" + this.apiKey;
+    // const url: string = this.url + locationInput + "&APPID=" + this.apiKey;
 
     try {
       const response = await fetch(url, {mode: 'cors'});
@@ -49,5 +67,9 @@ export class CallWeatherApiComponent implements OnInit {
       rain: incomingData.rain
     };
     return data;
+  }
+
+  getData() {
+    return this.data;
   }
 }
