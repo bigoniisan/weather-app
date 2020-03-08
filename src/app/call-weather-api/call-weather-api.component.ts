@@ -10,8 +10,8 @@ import { ConvertWeatherFunctionsComponent } from './convert-weather-functions/co
 
 export class CallWeatherApiComponent implements OnInit {
 
-  private readonly apiKey: string = "207c35e3e049c4cc7ed85efaf5ffc7c6";
-  private readonly url: string = "http://api.openweathermap.org/data/2.5/weather?q="
+  private readonly apiKey: string = '207c35e3e049c4cc7ed85efaf5ffc7c6';
+  private readonly url: string = 'http://api.openweathermap.org/data/2.5/weather?q=';
 
   private data: IWeatherData;
 
@@ -40,12 +40,12 @@ export class CallWeatherApiComponent implements OnInit {
   }
 
   async getWeatherData() {
-    const locationTextHTMLInput: HTMLInputElement = document.getElementById("location") as HTMLInputElement;
+    const locationTextHTMLInput: HTMLInputElement = document.getElementById('location') as HTMLInputElement;
     const locationText = locationTextHTMLInput.value;
 
     // const locationInput = document.forms["search-form"]["location-text"].value;
 
-    const url: string = this.url + locationText + "&APPID=" + this.apiKey;
+    const url: string = this.url + locationText + '&APPID=' + this.apiKey;
     // const url: string = this.url + locationInput + "&APPID=" + this.apiKey;
 
     try {
@@ -59,7 +59,7 @@ export class CallWeatherApiComponent implements OnInit {
   processData(incomingData) {
     const cwfc = new ConvertWeatherFunctionsComponent;
     const temp = incomingData.main.temp;
-    let data: IWeatherData = {
+    const data: IWeatherData = {
       tempKelvin: temp,
       tempCelsius: cwfc.convertKelvinToCelsius(temp),
       tempFahrenheit: cwfc.convertKelvinToFahrenheit(temp),

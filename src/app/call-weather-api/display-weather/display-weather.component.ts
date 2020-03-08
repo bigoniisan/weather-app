@@ -1,0 +1,18 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: 'app-display-weather',
+  templateUrl: './display-weather.component.html',
+  styleUrls: ['./display-weather.component.css']
+})
+export class DisplayWeatherComponent implements OnInit {
+  private tempKelvin: number;
+  private tempCelsius: number;
+  private tempFahrenheit: number;
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}
